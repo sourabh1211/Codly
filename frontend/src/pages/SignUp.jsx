@@ -14,7 +14,7 @@ const SignUp = () => {
 
   const submitForm = (e) => {
     e.preventDefault();
-    fetch(api_base_url + "/signUp", {
+    fetch("https://codly-1.onrender.com" + "/signUp", {
       mode: "cors",
       method: "POST",
       headers: {
@@ -94,3 +94,4 @@ const SignUp = () => {
 };
 
 export default SignUp;
+// api_base_url

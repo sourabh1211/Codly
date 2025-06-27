@@ -1,87 +1,70 @@
-# 💻 Codly – MERN Stack Online IDE with Multi-Language Support
+# 💻 Codly – MERN Stack Online IDE 🧠  
 
-Codly is a powerful, modern online IDE built with the MERN stack (MongoDB, Express.js, React.js, Node.js). It allows users to write, run, and manage code across multiple programming languages, all within an elegant web interface. With features like real-time code execution, secure authentication, and full project lifecycle management, Codly is perfect for developers, students, and coding enthusiasts.
-
----
-
-## 🚀 Features
-
-### 🧠 Multi-Language Support
-- Run code in popular languages like:
-  - JavaScript
-  - Python
-  - C++
-  - Java
-  - And more...
-
-### 📁 Project Management
-- Create new projects
-- Edit or rename existing projects
-- Delete projects
-- All data is securely stored in MongoDB
-
-### 🔐 Authentication
-- Secure JWT-based login/signup
-- Session management
-- User-specific project isolation
-
-### ⚡ Real-Time Code Execution
-- Submit code and instantly view output
-- Backend execution engine handles multiple languages
-
-### 💡 Clean and Responsive UI
-- Built with React.js and Tailwind CSS
-- Dark-mode friendly design
-- User-friendly interface for seamless coding experience
+**Codly** is a full-stack MERN-based **online code editor** that supports multiple programming languages with features like real-time execution, secure authentication, and complete project management. Create, edit, rename, delete, and organize your coding projects — all within your browser.
 
 ---
 
-## 📸 Screenshots
+## 🔥 Features  
 
-### 1. Login Page  
-![Login](./images/login.png)
+### 🔐 Authentication & Security  
+- **User Registration & Login** – Secure sign-up and login flow  
+- **JWT-Based Authentication** – Keeps sessions protected and users isolated  
 
-### 2. Signup Page  
-![Signup](./images/signup.png)
+### 💻 Code Editor  
+- **Multi-Language Support** – Run code in **JavaScript**, **Python**, **C++**, **Java**, and more  
+- **Real-Time Execution** – Backend runs the code and returns results instantly  
+- **Error Display** – Shows errors or output clearly in the console  
 
-### 3. Dashboard – Project List  
-![Project List](./images/dashboard.png)
+### 📁 Project Management  
+- **Create Project** – Start a new coding project  
+- **Rename Project** – Update project titles easily  
+- **Delete Project** – Remove projects when no longer needed  
+- **Persistent Storage** – All data saved in MongoDB  
 
-### 4. Create New Project Modal  
-![Create Project](./images/create_project.png)
-
-### 5. Rename Project Modal  
-![Rename Project](./images/rename_project.png)
-
-### 6. Code Editor  
-![Code Editor](./images/editor.png)
-
-### 7. Output Console  
-![Output](./images/output.png)
-
-### 8. Multi-Language Selector  
-![Language Selector](./images/language_selector.png)
-
-### 9. Delete Confirmation Modal  
-![Delete Modal](./images/delete_project.png)
+### 🎨 UI/UX Enhancements  
+- **Responsive Layout** – Built with **React.js** and **Tailwind CSS**  
+- **Avatar Initialization** – Displays user initials in the header  
+- **Clean & Minimalist Design** – Focused on code clarity and usability  
 
 ---
 
-## 🛠️ Tech Stack
+## ⚙️ Tech Stack  
 
-| Layer       | Technology           |
-|-------------|----------------------|
-| Frontend    | React.js, TailwindCSS|
-| Backend     | Node.js, Express.js  |
-| Database    | MongoDB              |
-| Auth        | JWT (JSON Web Tokens)|
-| Code Engine | Language execution via backend (Docker/API) |
+### 🖥️ Frontend  
+- **React.js** – Component-based UI  
+- **Tailwind CSS** – Modern styling  
+- **React Router** – Page navigation  
+
+### 🔧 Backend  
+- **Node.js & Express.js** – Server-side logic and APIs  
+- **MongoDB & Mongoose** – NoSQL storage for user and project data  
+
+### 🛠️ Dev Tools  
+- **JWT** – Token-based authentication  
+- **bcrypt** – Password hashing  
+- **Docker / API Scripts** – For code execution in isolated environments  
 
 ---
 
-## 📦 Installation
+## 🌍 Deployment  
 
-### 1. Clone the repository
-```bash
-git clone https://github.com/your-username/codly.git
-cd codly
+🚀 **Live Demo**: [Codly](https://your-live-link-here.vercel.app/)
+
+---
+
+## 📸 Website Preview  
+
+| Login | SignUp | Home/Dashboard | Create Project | Rename Project | Code Editor | Output Console | Language Selector | Delete Modal |
+|-------|--------|----------------|----------------|----------------|--------------|----------------|-------------------|--------------|
+| ![Login](./images/login.png) | ![Signup](./images/signup.png) | ![Home](./images/home.png) | ![Create Project](./images/create_project.png) | ![Rename](./images/rename_project.png) | ![Editor](./images/editor.png) | ![Output](./images/output.png) | ![Language](./images/language_selector.png) | ![Delete](./images/delete.png) |
+
+---
+
+## 🚀 Getting Started  
+
+### 📌 Installation  
+
+1. **Clone the Repository**  
+   ```bash
+   git clone https://github.com/yourusername/codly.git
+   cd codly

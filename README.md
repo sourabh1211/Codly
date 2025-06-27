@@ -48,7 +48,7 @@
 
 ## 🌍 Deployment  
 
-🚀 **Live Demo**: [Codly](https://your-live-link-here.vercel.app/)
+🚀 **Live Demo**: [Codly](https://sourabhcodly.vercel.app/)
 
 ---
 
@@ -56,7 +56,7 @@
 
 | Login | SignUp | Home/Dashboard | Create Project | Rename Project | Code Editor | Output Console | Language Selector | Delete Modal |
 |-------|--------|----------------|----------------|----------------|--------------|----------------|-------------------|--------------|
-| ![Login](login.png) | ![Signup](./images/signup.png) | ![Dashboard](./images/home.png) | ![Editor](./images/editor.png)| ![Create Project](./images/create_project.png) | ![Update](./images/rename_project.png)  | ![About](./images/output.png) | ![Service](./images/language_selector.png) | ![Contact](./images/delete.png) |
+| ![Login](Login.png) | ![Signup](Signup.png) | ![Dashboard](Dashboard.png) | ![Editor](Compiler.png)| ![Create Project](Create_project.png) | ![Update](Update.png)  | ![About](About.png) | ![Service](Service.png) | ![Contact](Contact.png) |
 
 ---
 

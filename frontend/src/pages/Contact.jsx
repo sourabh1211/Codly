@@ -37,7 +37,7 @@ const Contact = () => {
     <div className="min-h-screen bg-[#0f0e0e] text-white px-4 py-12 flex flex-col items-center">
       <div className="max-w-5xl w-full">
         <h1 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-transparent bg-clip-text">
-          Contact Sourabh
+          Contact
         </h1>
         <p className="text-center text-gray-400 mb-12 text-lg">
           Feel free to connect with me on any platform or drop a message below.

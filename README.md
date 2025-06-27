@@ -56,7 +56,7 @@
 
 | Login | SignUp | Home/Dashboard | Create Project | Rename Project | Code Editor | Output Console | Language Selector | Delete Modal |
 |-------|--------|----------------|----------------|----------------|--------------|----------------|-------------------|--------------|
-| ![Login](./images/login.png) | ![Signup](./images/signup.png) | ![Home](./images/home.png) | ![Create Project](./images/create_project.png) | ![Rename](./images/rename_project.png) | ![Editor](./images/editor.png) | ![Output](./images/output.png) | ![Language](./images/language_selector.png) | ![Delete](./images/delete.png) |
+| ![Login](login.png) | ![Signup](./images/signup.png) | ![Dashboard](./images/home.png) | ![Editor](./images/editor.png)| ![Create Project](./images/create_project.png) | ![Update](./images/rename_project.png)  | ![About](./images/output.png) | ![Service](./images/language_selector.png) | ![Contact](./images/delete.png) |
 
 ---
 

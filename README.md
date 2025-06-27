@@ -54,7 +54,7 @@
 
 ## 📸 Website Preview  
 
-| Login | SignUp | Home/Dashboard | Create Project | Rename Project | Code Editor | Output Console | Language Selector | Delete Modal |
+| Login | SignUp | Home/Dashboard | CodeEditor| Create Project | Update | About | Service | Contact |
 |-------|--------|----------------|----------------|----------------|--------------|----------------|-------------------|--------------|
 | ![Login](Login.png) | ![Signup](Signup.png) | ![Dashboard](Dashboard.png) | ![Editor](Compiler.png)| ![Create Project](Create_project.png) | ![Update](Update.png)  | ![About](About.png) | ![Service](Service.png) | ![Contact](Contact.png) |
 

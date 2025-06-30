@@ -6,14 +6,13 @@ import { api_base_url } from '../helper';
 import { toast } from 'react-toastify';
 
 const Editor = () => {
-  const [code, setCode] = useState(""); // State to hold the code
-  const { id } = useParams(); // Extract project ID from URL params
+  const [code, setCode] = useState(""); 
+  const { id } = useParams(); 
   const [output, setOutput] = useState("");
   const [error, setError] = useState(false);
 
   const [data, setData] = useState(null);
 
-  // Fetch project data on mount
   useEffect(() => {
     fetch(`${api_base_url}/getProject`, {
       mode: 'cors',
@@ -29,7 +28,7 @@ const Editor = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          setCode(data.project.code); // Set the fetched code
+          setCode(data.project.code); 
           setData(data.project);
         } else {
           toast.error(data.msg);
@@ -41,10 +40,9 @@ const Editor = () => {
       });
   }, [id]);
 
-  // Save project function
   const saveProject = () => {
-    const trimmedCode = code?.toString().trim(); // Ensure code is a string and trimmed
-    console.log('Saving code:', trimmedCode); // Debug log
+    const trimmedCode = code?.toString().trim();
+    console.log('Saving code:', trimmedCode);
 
     fetch(`${api_base_url}/saveProject`, {
       mode: 'cors',
@@ -55,7 +53,7 @@ const Editor = () => {
       body: JSON.stringify({
         token: localStorage.getItem('token'),
         projectId: id,
-        code: trimmedCode, // Use the latest code state
+        code: trimmedCode, 
       }),
     })
       .then((res) => res.json())
@@ -72,21 +70,20 @@ const Editor = () => {
       });
   };
 
-  // Shortcut handler for saving with Ctrl+S
+  
   const handleSaveShortcut = (e) => {
     if (e.ctrlKey && e.key === 's') {
-      e.preventDefault(); // Prevent browser's default save behavior
-      saveProject(); // Call the save function
+      e.preventDefault(); 
+      saveProject();
     }
   };
 
-  // Add and clean up keyboard event listener
   useEffect(() => {
     window.addEventListener('keydown', handleSaveShortcut);
     return () => {
       window.removeEventListener('keydown', handleSaveShortcut);
     };
-  }, [code]); // Reattach when `code` changes
+  }, [code]); 
 
   const runProject = () => {
     fetch("https://emkc.org/api/v2/piston/execute", {
@@ -118,14 +115,14 @@ const Editor = () => {
         <div className="left w-[50%] h-full">
           <Editor2
             onChange={(newCode) => {
-              console.log('New Code:', newCode); // Debug: Log changes
-              setCode(newCode || ''); // Update state
+              console.log('New Code:', newCode); 
+              setCode(newCode || ''); 
             }}
             theme="vs-dark"
             height="100%"
             width="100%"
             language="python"
-            value={code} // Bind editor to state
+            value={code} 
           />
         </div>
         <div className="right p-[15px] w-[50%] h-full bg-[#27272a]">
@@ -133,7 +130,7 @@ const Editor = () => {
             <p className="p-0 m-0">Output</p>
             <button
               className="btnNormal !w-fit !px-[20px] bg-blue-500 transition-all hover:bg-blue-600"
-              onClick={runProject} // Save when clicking the button
+              onClick={runProject} 
             >
               run
             </button>

@@ -195,7 +195,6 @@ const Home = () => {
         }
       </div>
 
-      {/* Create Modal */}
       {isCreateModelShow && (
         <div
           onClick={(e) => {
@@ -238,7 +237,6 @@ const Home = () => {
         </div>
       )}
 
-      {/* Edit Modal */}
       {isEditModelShow && (
         <div
           onClick={(e) => {

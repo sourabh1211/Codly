@@ -1,6 +1,5 @@
 import React from 'react';
 import { FaCode, FaUsers, FaFolderOpen, FaShareAlt } from 'react-icons/fa';
-
 const Services = () => {
   const services = [
     {
@@ -46,5 +45,4 @@ const Services = () => {
     </div>
   );
 };
-
 export default Services;

@@ -3,13 +3,13 @@ import logo from "../images/logos/logo.png";
 import { Link, useNavigate } from 'react-router-dom';
 import { api_base_url } from '../helper';
 import { toast } from 'react-toastify';
-import { Eye, EyeOff } from 'lucide-react'; // ✅ Add this icon lib
+import { Eye, EyeOff } from 'lucide-react'; 
 
 const SignUp = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
-  const [showPwd, setShowPwd] = useState(false); // 👁️ toggle state
+  const [showPwd, setShowPwd] = useState(false); 
   const navigate = useNavigate();
 
   const submitForm = (e) => {
@@ -92,5 +92,4 @@ const SignUp = () => {
     </div>
   );
 };
-
 export default SignUp;

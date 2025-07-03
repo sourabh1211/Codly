@@ -293,7 +293,7 @@ const Home = () => {
     control: (provided) => ({
       ...provided,
       backdropFilter: 'blur(8px)',
-      backgroundColor: 'rgba(28,28,30,0.6)',
+      backgroundColor: 'rgba(28,28,30,0.3)',
       border: '1px solid rgba(255,255,255,0.2)',
       color: '#fff',
       padding: '5px',
@@ -302,7 +302,7 @@ const Home = () => {
     menu: (provided) => ({
       ...provided,
       backdropFilter: 'blur(12px)',
-      backgroundColor: 'rgba(0,0,0,0.7)',
+      backgroundColor: 'rgba(0,0,0,0.3)',
       color: '#fff',
       width: '100%',
       maxHeight: '200px',
@@ -418,7 +418,7 @@ const Home = () => {
         </h3>
         <button
           onClick={() => setIsCreateModelShow(true)}
-          className="px-6 py-2 text-lg font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 bg-opacity-80 rounded-2xl shadow-lg hover:scale-105 hover:shadow-2xl transition-transform duration-300 backdrop-blur-sm"
+          className="px-6 py-2 text-lg font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 bg-opacity-80 rounded-2xl shadow-lg hover:scale-105 hover:shadow-2xl transition-transform duration-300 backdrop-blur-sm bg-transparent"
         >
           + Create Project
         </button>
@@ -430,11 +430,11 @@ const Home = () => {
             <div
               key={idx}
               onClick={() => navigate(`/editior/${project._id}`)}
-              className="relative group p-6 bg-gradient-to-br from-gray-900 via-zinc-900 to-black bg-opacity-40 backdrop-blur-lg border border-gray-700 rounded-3xl hover:ring-1 hover:ring-cyan-400 transform hover:scale-[1.02] transition duration-400 shadow-[0_0_15px_#0ff]/20"
+              className="relative group p-6 bg-gradient-to-br from-gray-900 via-zinc-900 to-transparent bg-opacity-30 backdrop-blur-lg border border-gray-700 rounded-3xl hover:ring-1 hover:ring-cyan-400 transform hover:scale-[1.02] transition duration-400 shadow-[0_0_15px_#0ff]/20"
             >
               <div className="flex items-center gap-5">
                 <img
-                  className="w-20 h-16 object-contain rounded-lg border border-gray-600 p-1 bg-white/10"
+                  className="w-20 h-16 object-contain rounded-lg border border-gray-600 p-1 bg-transparent"
                   src={
                     project.projLanguage === "python" ? "https://images.ctfassets.net/em6l9zw4tzag/oVfiswjNH7DuCb7qGEBPK/b391db3a1d0d3290b96ce7f6aacb32b0/python.png" :
                     project.projLanguage === "javascript" ? "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" :
@@ -455,13 +455,13 @@ const Home = () => {
               <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                 <button
                   onClick={(e) => { e.stopPropagation(); setIsEditModelShow(true); setEditProjId(project._id); setName(project.name); }}
-                  className="px-3 py-1 text-sm bg-blue-600 bg-opacity-70 hover:bg-opacity-100 rounded-lg backdrop-blur-sm transition"
+                  className="px-3 py-1 text-sm bg-blue-600 bg-opacity-70 hover:bg-opacity-100 rounded-lg backdrop-blur-sm transition bg-transparent"
                 >
                   Edit
                 </button>
                 <button
                   onClick={(e) => { e.stopPropagation(); deleteProject(project._id); }}
-                  className="px-3 py-1 text-sm bg-red-500 bg-opacity-70 hover:bg-opacity-100 rounded-lg backdrop-blur-sm transition"
+                  className="px-3 py-1 text-sm bg-red-500 bg-opacity-70 hover:bg-opacity-100 rounded-lg backdrop-blur-sm transition bg-transparent"
                 >
                   Delete
                 </button>
@@ -476,16 +476,16 @@ const Home = () => {
       {isCreateModelShow && (
         <div
           onClick={(e) => e.target.classList.contains('modelCon') && (setIsCreateModelShow(false), setName(''))}
-          className="modelCon fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm z-50"
+          className="modelCon fixed inset-0 flex items-center justify-center bg-transparent backdrop-blur-sm z-50"
         >
-          <div className="bg-black bg-opacity-60 p-8 rounded-3xl w-11/12 md:w-1/3 border border-gray-600 shadow-xl backdrop-filter backdrop-blur-lg">
+          <div className="bg-transparent p-8 rounded-3xl w-11/12 md:w-1/3 border border-gray-600 shadow-xl backdrop-filter backdrop-blur-lg">
             <h3 className="text-2xl font-bold text-white text-center mb-6 animate-pulse">🚀 Create New Project</h3>
             <input
               onChange={(e) => setName(e.target.value)}
               value={name}
               type="text"
               placeholder="Enter project name"
-              className="w-full mb-5 px-4 py-2 bg-zinc-900 bg-opacity-50 border border-gray-600 rounded-lg focus:ring-2 focus:ring-cyan-400 transition"
+              className="w-full mb-5 px-4 py-2 bg-transparent border border-gray-600 rounded-lg focus:ring-2 focus:ring-cyan-400 transition"
             />
             <Select
               options={languageOptions}
@@ -506,16 +506,16 @@ const Home = () => {
       {isEditModelShow && (
         <div
           onClick={(e) => e.target.classList.contains('modelCon') && (setIsEditModelShow(false), setName(''))}
-          className="modelCon fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm z-50"
+          className="modelCon fixed inset-0 flex items-center justify-center bg-transparent backdrop-blur-sm z-50"
         >
-          <div className="bg-black bg-opacity-60 p-8 rounded-3xl w-11/12 md:w-1/3 border border-gray-600 shadow-xl backdrop-filter backdrop-blur-lg">
+          <div className="bg-transparent p-8 rounded-3xl w-11/12 md:w-1/3 border border-gray-600 shadow-xl backdrop-filter backdrop-blur-lg">
             <h3 className="text-2xl font-bold text-white text-center mb-6 animate-pulse">✏️ Update Project</h3>
             <input
               onChange={(e) => setName(e.target.value)}
               value={name}
               type="text"
               placeholder="Update project name"
-              className="w-full mb-5 px-4 py-2 bg-zinc-900 bg-opacity-50 border border-gray-600 rounded-lg focus:ring-2 focus:ring-cyan-400 transition"
+              className="w-full mb-5 px-4 py-2 bg-transparent border border-gray-600 rounded-lg focus:ring-2 focus:ring-cyan-400 transition"
             />
             <button onClick={updateProj} className="w-full py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 hover:scale-105 transition transform">Update</button>
           </div>

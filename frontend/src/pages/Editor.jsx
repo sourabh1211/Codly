@@ -10,7 +10,6 @@ const Editor = () => {
   const { id } = useParams(); 
   const [output, setOutput] = useState("");
   const [error, setError] = useState(false);
-
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -43,7 +42,6 @@ const Editor = () => {
   const saveProject = () => {
     const trimmedCode = code?.toString().trim();
     console.log('Saving code:', trimmedCode);
-
     fetch(`${api_base_url}/saveProject`, {
       mode: 'cors',
       method: 'POST',
@@ -70,7 +68,6 @@ const Editor = () => {
       });
   };
 
-  
   const handleSaveShortcut = (e) => {
     if (e.ctrlKey && e.key === 's') {
       e.preventDefault(); 
@@ -134,9 +131,8 @@ const Editor = () => {
             >
               run
             </button>
-
           </div>
-            <pre className={`w-full h-[75vh] ${error ? "text-red-500" : ""}`} style={{textWrap: "nowrap"}}>{output}</pre>
+          <pre className={`w-full h-[75vh] ${error ? "text-red-500" : ""}`} style={{textWrap: "nowrap"}}>{output}</pre>
         </div>
       </div>
     </>

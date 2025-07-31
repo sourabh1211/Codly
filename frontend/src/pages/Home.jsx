@@ -4,7 +4,6 @@ import Select from 'react-select';
 import { api_base_url } from '../helper';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
 const Home = () => {
   const [isCreateModelShow, setIsCreateModelShow] = useState(false);
   const [languageOptions, setLanguageOptions] = useState([]);
@@ -61,7 +60,6 @@ const Home = () => {
       }));
     setLanguageOptions(options);
   };
-
   const getProjects = async () => {
     fetch(api_base_url + "/getProjects", {
       method: "POST",
@@ -72,7 +70,6 @@ const Home = () => {
       else toast.error(data.msg);
     });
   };
-
   const createProj = () => {
     fetch(api_base_url + "/createProj", {
       method: "POST",
@@ -90,7 +87,6 @@ const Home = () => {
       } else toast.error(data.msg);
     });
   };
-
   const deleteProject = (id) => {
     if (window.confirm("Are you sure you want to delete this project?")) {
       fetch(api_base_url + "/deleteProject", {
@@ -103,7 +99,6 @@ const Home = () => {
       });
     }
   };
-
   const updateProj = () => {
     fetch(api_base_url + "/editProject", {
       method: "POST",
@@ -270,5 +265,4 @@ const Home = () => {
     </>
   );
 };
-
 export default Home;

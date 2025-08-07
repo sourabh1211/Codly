@@ -39,6 +39,7 @@ const Editor = () => {
       });
   }, [id]);
 
+  
   const saveProject = () => {
     const trimmedCode = code?.toString().trim();
     console.log('Saving code:', trimmedCode);
@@ -68,6 +69,7 @@ const Editor = () => {
       });
   };
 
+  
   const handleSaveShortcut = (e) => {
     if (e.ctrlKey && e.key === 's') {
       e.preventDefault(); 
@@ -82,6 +84,7 @@ const Editor = () => {
     };
   }, [code]); 
 
+  
   const runProject = () => {
     fetch("https://emkc.org/api/v2/piston/execute", {
       method: "POST",
@@ -138,5 +141,6 @@ const Editor = () => {
     </>
   );
 };
+
 
 export default Editor;

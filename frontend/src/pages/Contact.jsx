@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaLinkedin, FaInstagram, FaSnapchat, FaEnvelope } from 'react-icons/fa';
 
+
 const Contact = () => {
   const contactItems = [
     {
@@ -43,7 +44,6 @@ const Contact = () => {
           Feel free to connect with me on any platform or drop a message below.
         </p>
 
-        {/* Social Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16">
           {contactItems.map((item, index) => (
             <a
@@ -59,7 +59,6 @@ const Contact = () => {
           ))}
         </div>
 
-        {/* Contact Form */}
         <div className="bg-[#1f1f1f] rounded-2xl p-8 shadow-lg max-w-3xl mx-auto w-full">
           <h2 className="text-2xl font-semibold mb-6 text-center bg-gradient-to-r from-purple-400 to-pink-500 text-transparent bg-clip-text">
             Send me a message
@@ -92,5 +91,6 @@ const Contact = () => {
     </div>
   );
 };
+
 
 export default Contact;

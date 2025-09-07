@@ -2,7 +2,8 @@ const userModel = require("../models/userModel");
 const projectModel = require("../models/projectModel");
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
-const secret = "secret";
+const secret = "secret";    
+
 function getStartupCode(language) {
   if (language.toLowerCase() === "python") {
     return 'print("Hello World")';
@@ -22,6 +23,7 @@ function getStartupCode(language) {
     return 'Language not supported';
   }
 }
+
 exports.signUp = async (req, res) => {
   try {
     let { email, pwd, fullName } = req.body;

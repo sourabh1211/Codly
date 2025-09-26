@@ -51,26 +51,36 @@ const Services = () => {
             </span>
           </h1>
 
-          {/* Grid of glass cards with spotlight */}
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((s, i) => (
-              <div
-                key={i}
-                onMouseMove={onMove}
-                className="group relative overflow-hidden rounded-2xl p-6
-                           bg-white/5 backdrop-blur-xl border border-white/10
-                           shadow-[0_10px_30px_-15px_rgba(0,0,0,0.7)]
-                           transform-gpu transition-all duration-300
-                           hover:-translate-y-0.5 hover:scale-[1.01] hover:ring-1 hover:ring-indigo-400/40"
-              >
-                {/* spotlight glow (same as About) */}
-                <span
-                  className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{
-                    background:
-                      "radial-gradient(220px 220px at var(--mx,50%) var(--my,50%), rgba(99,102,241,0.22), transparent 60%)",
-                  }}
-                />
+         {/* Grid of glass cards — 2x2 layout */}
+<div className="mt-10 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 max-w-5xl mx-auto">
+  {services.map((s, i) => (
+    <div
+      key={i}
+      onMouseMove={onMove}
+      className="group relative overflow-hidden rounded-2xl p-6
+                 bg-white/5 backdrop-blur-xl border border-white/10
+                 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.7)]
+                 transform-gpu transition-all duration-300
+                 hover:-translate-y-0.5 hover:scale-[1.01] hover:ring-1 hover:ring-indigo-400/40"
+    >
+      {/* spotlight glow */}
+      <span
+        className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        style={{
+          background:
+            "radial-gradient(220px 220px at var(--mx,50%) var(--my,50%), rgba(99,102,241,0.22), transparent 60%)",
+        }}
+      />
+      <div className="relative z-[1]">
+        <div className="mb-4">{s.icon}</div>
+        <h3 className="text-xl font-semibold text-white mb-2">{s.title}</h3>
+        <p className="text-slate-300">{s.desc}</p>
+        <div className="mt-5 h-px w-full bg-gradient-to-r from-indigo-500/30 via-violet-500/30 to-indigo-500/30" />
+      </div>
+    </div>
+  ))}
+</div>
+
 
                 <div className="relative z-[1]">
                   <div className="mb-4">{s.icon}</div>

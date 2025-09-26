@@ -1,24 +1,51 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import logo from "../images/logos/logo.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, LogOut } from "lucide-react";
 
 const Navbar = () => {
-  const routes = {
-    Home: "/",
-    About: "/about",
-    Services: "/services",
-    Contact: "/contact",
-  };
+  const routes = useMemo(
+    () => [
+      { label: "Home", to: "/" },
+      { label: "About", to: "/about" },
+      { label: "Services", to: "/services" },
+      { label: "Contact", to: "/contact" },
+    ],
+    []
+  );
 
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const drawerRef = useRef(null);
-  const btnRef = useRef(null);
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  // subtle background change on scroll
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Ink bar state (desktop)
+  const listRef = useRef(null);
+  const [ink, setInk] = useState({ left: 0, width: 0, visible: false });
+
+  // map route -> ref for measuring position
+  const linkRefs = useRef({});
+  routes.forEach(({ to }) => {
+    if (!linkRefs.current[to]) linkRefs.current[to] = React.createRef();
+  });
+
+  // set ink to an element (hovered or active)
+  const moveInkToEl = (el) => {
+    if (!el || !listRef.current) return;
+    const parent = listRef.current;
+    const left = el.offsetLeft;
+    const width = el.offsetWidth;
+    setInk({ left, width, visible: true });
+  };
+
+  // on route change, snap to active link (when not hovering)
+  useEffect(() => {
+    const activeRef = linkRefs.current[pathname]?.current;
+    moveInkToEl(activeRef);
+  }, [pathname]);
+
+  // subtle background shift on scroll
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 6);
     onScroll();
@@ -26,46 +53,11 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // close drawer on route change
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
-
-  // close drawer on outside click
-  useEffect(() => {
-    const onClick = (e) => {
-      if (!open) return;
-      if (drawerRef.current && !drawerRef.current.contains(e.target) && !btnRef.current.contains(e.target)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", onClick);
-    return () => document.removeEventListener("mousedown", onClick);
-  }, [open]);
-
+  // logout
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("isLoggedIn");
     window.location.reload();
-  };
-
-  const LinkItem = ({ label, to }) => {
-    const isActive = pathname === to;
-    return (
-      <Link
-        to={to}
-        className={`relative px-2 py-1 transition-all duration-300 ${
-          isActive ? "text-cyan-300" : "text-white/90 hover:text-cyan-400"
-        }`}
-      >
-        {label}
-        <span
-          className={`absolute left-0 -bottom-0.5 h-[2px] rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-300 ${
-            isActive ? "w-full" : "w-0 group-hover:w-full"
-          }`}
-        />
-      </Link>
-    );
   };
 
   return (
@@ -88,15 +80,52 @@ const Navbar = () => {
           />
         </button>
 
-        {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-6 lg:gap-8 group">
-          {Object.entries(routes).map(([label, to]) => (
-            <LinkItem key={label} label={label} to={to} />
-          ))}
+        {/* Desktop links + ink bar */}
+        <div className="relative hidden md:block">
+          <div
+            ref={listRef}
+            className="relative flex items-center gap-6 lg:gap-8"
+            onMouseLeave={() => {
+              // return ink to active route when leaving the nav
+              const activeRef = linkRefs.current[pathname]?.current;
+              moveInkToEl(activeRef);
+            }}
+          >
+            {routes.map(({ label, to }) => {
+              const isActive = pathname === to;
+              return (
+                <Link
+                  key={to}
+                  to={to}
+                  ref={linkRefs.current[to]}
+                  onMouseEnter={(e) => moveInkToEl(e.currentTarget)}
+                  className={`relative px-2 py-1 transition-colors duration-200 ${
+                    isActive ? "text-cyan-300" : "text-white/90 hover:text-cyan-300"
+                  }`}
+                >
+                  {label}
+                </Link>
+              );
+            })}
 
+            {/* ink bar (moves under hovered/active link only) */}
+            <span
+              className={`pointer-events-none absolute -bottom-1 h-[2px] rounded-full 
+                          bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-300 ease-out
+                          ${ink.visible ? "opacity-100" : "opacity-0"}`}
+              style={{
+                left: ink.left,
+                width: ink.width,
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Desktop logout */}
+        <div className="hidden md:flex items-center">
           <button
             onClick={logout}
-            className="ml-2 inline-flex items-center gap-2 rounded-full px-5 py-2 font-semibold text-white
+            className="inline-flex items-center gap-2 rounded-full px-5 py-2 font-semibold text-white
                        bg-gradient-to-r from-indigo-600 to-violet-600
                        shadow-lg shadow-indigo-900/30 transform-gpu transition-all duration-300
                        hover:shadow-xl hover:shadow-indigo-900/40 hover:scale-[1.03] active:scale-[0.98]"
@@ -108,7 +137,6 @@ const Navbar = () => {
 
         {/* Mobile hamburger */}
         <button
-          ref={btnRef}
           onClick={() => setOpen((v) => !v)}
           aria-label="Open menu"
           aria-expanded={open}
@@ -134,7 +162,6 @@ const Navbar = () => {
         />
         {/* panel */}
         <div
-          ref={drawerRef}
           className={`absolute right-0 top-0 h-full w-[82%] max-w-[360px]
                       bg-slate-950/80 backdrop-blur-2xl border-l border-white/10
                       shadow-[0_20px_60px_rgba(0,0,0,0.65)]
@@ -152,27 +179,36 @@ const Navbar = () => {
             </button>
           </div>
 
-          <div className="p-4 flex flex-col gap-1">
-            {Object.entries(routes).map(([label, to]) => {
+          {/* mobile links (each has its own underline on hover only) */}
+          <div className="p-3">
+            {routes.map(({ label, to }) => {
               const isActive = pathname === to;
               return (
                 <Link
-                  key={label}
+                  key={to}
                   to={to}
-                  className={`group relative rounded-xl px-4 py-3 transition-all duration-200
-                              ${isActive ? "bg-white/10 text-cyan-300" : "text-white/90 hover:bg-white/8 hover:text-cyan-300"}`}
+                  onClick={() => setOpen(false)}
+                  className={`group flex items-center justify-between rounded-xl px-4 py-3 mb-1
+                              transition-all duration-200 ${
+                                isActive
+                                  ? "text-cyan-300 bg-white/10"
+                                  : "text-white/90 hover:text-cyan-300 hover:bg-white/8"
+                              }`}
                 >
-                  <span className="relative z-[1]">{label}</span>
-                  {/* hover glow */}
-                  <span className="pointer-events-none absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        style={{ background: "radial-gradient(120px 120px at 90% 50%, rgba(99,102,241,0.18), transparent 60%)" }} />
+                  <span className="relative">
+                    {label}
+                    <span className="absolute left-0 -bottom-0.5 h-[2px] w-0 bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-300 group-hover:w-full" />
+                  </span>
+                  <span className="pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-cyan-300">
+                    →
+                  </span>
                 </Link>
               );
             })}
 
             <button
               onClick={logout}
-              className="mt-3 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 font-semibold text-white
+              className="mt-3 w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 font-semibold text-white
                          bg-gradient-to-r from-indigo-600 to-violet-600
                          shadow-lg shadow-indigo-900/30 transform-gpu transition-all duration-300
                          hover:shadow-xl hover:shadow-indigo-900/40 active:scale-[0.98]"
@@ -182,7 +218,6 @@ const Navbar = () => {
             </button>
           </div>
 
-          {/* decorative bottom gradient bar */}
           <div className="mt-auto h-12 bg-gradient-to-r from-indigo-600/30 via-violet-600/30 to-indigo-600/30" />
         </div>
       </div>

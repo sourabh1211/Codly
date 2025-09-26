@@ -164,13 +164,16 @@ const Home = () => {
 
         {/* Header */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 px-4 sm:px-8 md:px-16 pt-8 md:pt-10">
-          <h3 className="text-2xl sm:text-3xl font-bold text-white relative group transition-all duration-300">
-            👋{" "}
-            <span className="inline-block bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-              Welcome To Codly
-            </span>
-            <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-500 group-hover:w-full" />
-          </h3>
+         <h3 className="text-2xl sm:text-3xl font-bold text-white relative group">
+  👋{" "}
+  <span className="inline-block bg-gradient-to-r from-blue-400 via-indigo-500 to-violet-500 bg-clip-text text-transparent">
+    Welcome To Codly
+  </span>
+  <span className="absolute bottom-0 left-0 w-0 h-[2px] rounded-full
+                   bg-gradient-to-r from-blue-400 via-indigo-500 to-violet-500
+                   transition-all duration-500 group-hover:w-full" />
+</h3>
+
 
           <button
             onClick={() => setIsCreateModelShow(true)}

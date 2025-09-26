@@ -1,97 +1,128 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import logo from "../images/logos/logo.png";
-import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { api_base_url } from '../helper';
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { api_base_url } from "../helper";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
+  const [showPwd, setShowPwd] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
-    fetch(api_base_url + "/login", {
-      mode: "cors",
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, pwd }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("isLoggedIn", true);
-          window.location.href = "/";
-        } else {
-          toast.error(data.msg);
-        }
+    if (loading) return;
+
+    // Very basic validation – expand as needed
+    if (!email || !pwd) {
+      toast.error("Please enter both email and password.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch(`${api_base_url}/login`, {
+        mode: "cors",
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        // If your API uses cookies (recommended), add: credentials: "include",
+        body: JSON.stringify({ email, pwd }),
       });
+
+      // Non-2xx handling
+      if (!res.ok) {
+        const text = await res.text().catch(() => "");
+        throw new Error(text || `Login failed (${res.status})`);
+      }
+
+      const data = await res.json();
+
+      if (data?.success && data?.token) {
+        // Prefer httpOnly secure cookies set by the server.
+        // If you must store the token client-side:
+        localStorage.setItem("token", data.token);
+
+        toast.success("Logged in!");
+        navigate("/"); // SPA navigation instead of full reload
+      } else {
+        toast.error(data?.msg || "Invalid credentials.");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="min-h-screen grid grid-cols-1 md:grid-cols-2 bg-[#0a0f1c] relative overflow-hidden">
-      {/* soft gradients like the mock */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(900px_480px_at_15%_-10%,rgba(59,130,246,0.25),transparent_60%),radial-gradient(700px_420px_at_110%_35%,rgba(168,85,247,0.18),transparent_60%)]" />
+    <div className="flex items-center justify-center min-h-screen bg-white px-4">
+      <form
+        onSubmit={submitForm}
+        className="w-full max-w-md sm:max-w-lg bg-black p-8 sm:p-10 rounded-2xl shadow-2xl flex flex-col items-center gap-5 transition-all duration-300"
+        noValidate
+      >
+        <img className="w-48 object-contain mb-4" src={logo} alt="Company logo" />
 
-      {/* Left side: form */}
-      <section className="relative z-10 flex items-center">
-        <div className="w-full px-6 sm:px-10 lg:px-16 xl:px-24 py-10 md:py-16">
-          <img className="h-8 w-auto mb-8" src={logo} alt="Logo" />
+        <div className="w-full">
+          <label htmlFor="email" className="sr-only">Email</label>
+          <input
+            id="email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            type="email"
+            placeholder="Enter your email"
+            required
+            autoComplete="email"
+            aria-invalid={!email ? "true" : "false"}
+            className="w-full px-5 py-3 rounded-xl bg-[#1e1e1e] text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+          />
+        </div>
 
-          <form
-            onSubmit={submitForm}
-            className="w-full max-w-xl rounded-2xl bg-[#0b1323]/80 backdrop-blur-md border border-white/10 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)] p-6 sm:p-8"
+        <div className="w-full relative">
+          <label htmlFor="password" className="sr-only">Password</label>
+          <input
+            id="password"
+            onChange={(e) => setPwd(e.target.value)}
+            value={pwd}
+            type={showPwd ? "text" : "password"}
+            placeholder="Enter your password"
+            required
+            autoComplete="current-password"
+            aria-invalid={!pwd ? "true" : "false"}
+            className="w-full px-5 py-3 pr-12 rounded-xl bg-[#1e1e1e] text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPwd((s) => !s)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-300 text-sm hover:text-white"
+            aria-label={showPwd ? "Hide password" : "Show password"}
           >
-            <div className="space-y-4">
-              <div>
-                <input
-                  onChange={(e) => setEmail(e.target.value)}
-                  value={email}
-                  type="email"
-                  placeholder="Enter your email"
-                  required
-                  className="w-full px-4 py-3 rounded-xl bg-[#121a2b] text-white placeholder-slate-400 outline-none border border-white/10 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition"
-                />
-              </div>
-
-              <div>
-                <input
-                  onChange={(e) => setPwd(e.target.value)}
-                  value={pwd}
-                  type="password"
-                  placeholder="Enter your password"
-                  required
-                  className="w-full px-4 py-3 rounded-xl bg-[#121a2b] text-white placeholder-slate-400 outline-none border border-white/10 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition"
-                />
-              </div>
-            </div>
-
-            <div className="mt-4 w-full text-sm text-slate-400 text-left">
-              Don't have an account?{" "}
-              <Link to="/signUp" className="text-blue-400 hover:text-blue-300 underline underline-offset-2">
-                Sign Up
-              </Link>
-            </div>
-
-            <button
-              type="submit"
-              className="w-full mt-6 bg-blue-600 hover:bg-blue-500 text-white py-3.5 rounded-xl font-semibold transition shadow-lg shadow-blue-600/25"
-            >
-              Login
-            </button>
-          </form>
+            {showPwd ? "Hide" : "Show"}
+          </button>
         </div>
-      </section>
 
-      {/* Right side: decorative hero like the screenshot (no data changes) */}
-      <aside className="relative hidden md:block">
-        <div className="absolute inset-0">
-          {/* replace with your asset if desired */}
-          <div className="h-full w-full bg-[url('/images/auth-hero.jpg')] bg-cover bg-center opacity-70" />
-          <div className="absolute inset-0 bg-gradient-to-l from-[#0a0f1c] via-transparent to-transparent" />
+        <div className="w-full text-sm text-gray-400 text-left">
+          Don&apos;t have an account?{" "}
+          <Link to="/signUp" className="text-blue-400 hover:underline">
+            Sign Up
+          </Link>
         </div>
-      </aside>
+
+        <button
+          type="submit"
+          disabled={loading}
+          className={`w-full mt-2 text-white py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg ${
+            loading
+              ? "bg-blue-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700 hover:shadow-blue-500/30"
+          }`}
+        >
+          {loading ? "Logging in..." : "Login"}
+        </button>
+      </form>
     </div>
   );
 };

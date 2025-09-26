@@ -7,7 +7,7 @@ import { api_base_url } from "../helper";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
-  const [leaving, setLeaving] = useState(false); // NEW: for smooth exit
+  const [leaving, setLeaving] = useState(false); // NEW: exit animation flag
   const navigate = useNavigate();
 
   const submitForm = (e) => {
@@ -30,24 +30,35 @@ const Login = () => {
       });
   };
 
-  // NEW: smooth transition then navigate to Sign Up
-  const goSignupSmooth = (e) => {
-    e.preventDefault();
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReduced) {
-      navigate("/signUp");
+  // NEW: shared smooth-exit helper
+  const smoothNavigate = (path) => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      navigate(path);
       return;
     }
     setLeaving(true);
-    setTimeout(() => navigate("/signUp"), 340); // matches duration-300 with a small buffer
+    setTimeout(() => navigate(path), 340); // keep in sync with duration-300 (+ buffer)
+  };
+
+  const goSignupSmooth = (e) => {
+    e.preventDefault();
+    smoothNavigate("/signUp");
+  };
+
+  const goForgotSmooth = (e) => {
+    e.preventDefault();
+    smoothNavigate("/forgot");
   };
 
   return (
     <div className="min-h-screen w-full grid grid-cols-1 lg:grid-cols-2">
-      {/* Left visual panel (hidden on small screens) */}
+      {/* Left visual panel (auto-hides on small screens) */}
       <div className="hidden lg:flex relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+        {/* decorative blobs */}
         <div className="pointer-events-none absolute -top-24 -left-24 w-[34rem] h-[34rem] rounded-full blur-3xl opacity-25 bg-indigo-600" />
         <div className="pointer-events-none absolute -bottom-24 -right-24 w-[32rem] h-[32rem] rounded-full blur-3xl opacity-20 bg-violet-600" />
+        {/* logo center */}
         <div className="m-auto text-center px-10">
           <img
             src={logo}
@@ -65,11 +76,10 @@ const Login = () => {
 
       {/* Right form panel (full page on mobile) */}
       <div className="flex items-center justify-center bg-slate-950 lg:bg-slate-900/10">
-        {/* wrapper that animates out on link click */}
+        {/* perspective wrapper for subtle 3D + exit animation */}
         <div
           className={`w-full max-w-md sm:max-w-lg p-6 sm:p-8 md:p-10 [perspective:1200px]
-                      transition-all duration-300 transform-gpu
-                      motion-reduce:transition-none
+                      transition-all duration-300 transform-gpu motion-reduce:transition-none
                       ${leaving ? "opacity-0 translate-y-2 scale-[0.98] blur-[2px]" : "opacity-100 translate-y-0 scale-100 blur-0"}`}
         >
           <form
@@ -80,13 +90,25 @@ const Login = () => {
                        motion-safe:hover:[transform:rotateX(4deg)_rotateY(-4deg)]
                        motion-reduce:transform-none"
           >
+            {/* halo glow on hover */}
+            <span className="pointer-events-none absolute -inset-0.5 rounded-[28px] opacity-0
+                             group-hover:opacity-100 transition-opacity duration-500
+                             bg-[radial-gradient(100%_60%_at_50%_0%,rgba(99,102,241,0.22),transparent_60%)]" />
+
             {/* mobile logo */}
             <div className="lg:hidden flex justify-center">
-              <img src={logo} alt="Brand" className="w-28 sm:w-32 drop-shadow" />
+              <img
+                src={logo}
+                alt="Brand"
+                className="w-28 sm:w-32 drop-shadow"
+              />
             </div>
 
             <div className="space-y-1">
-              <label htmlFor="email" className="block text-sm font-medium text-slate-300">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-slate-300"
+              >
                 Email
               </label>
               <input
@@ -108,7 +130,10 @@ const Login = () => {
             </div>
 
             <div className="space-y-1">
-              <label htmlFor="password" className="block text-sm font-medium text-slate-300">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-slate-300"
+              >
                 Password
               </label>
               <input
@@ -132,7 +157,7 @@ const Login = () => {
             <div className="flex items-center justify-between text-sm">
               <div className="text-slate-400">
                 Don&apos;t have an account?{" "}
-                {/* UPDATED: intercept click to animate out smoothly with blur */}
+                {/* UPDATED: smooth blur transition to Sign Up */}
                 <Link
                   to="/signUp"
                   onClick={goSignupSmooth}
@@ -142,8 +167,10 @@ const Login = () => {
                   Sign Up
                 </Link>
               </div>
+              {/* UPDATED: smooth blur transition to Forgot */}
               <Link
                 to="/forgot"
+                onClick={goForgotSmooth}
                 className="text-slate-400 hover:text-slate-200 transition-colors"
               >
                 Forgot?
@@ -162,6 +189,7 @@ const Login = () => {
               Login
             </button>
 
+            {/* Full-width footnote / divider */}
             <div className="flex items-center gap-3 text-slate-400/70 text-xs">
               <div className="h-px w-full bg-white/10 transition-colors" />
               <span className="tracking-wide">secured login</span>
@@ -169,8 +197,11 @@ const Login = () => {
             </div>
           </form>
 
+          {/* width helper text for devs; safe to remove */}
           <div className="mt-4 text-center text-xs text-slate-500">
-            Responsive: 100% on mobile · split layout on ≥1024px
+            <span className="inline-block">
+              Responsive: 100% on mobile · split layout on ≥1024px
+            </span>
           </div>
         </div>
       </div>

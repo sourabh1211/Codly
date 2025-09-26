@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes fadeScaleIn {
+  from { opacity: 0; transform: scale(0.98) translateY(-4px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* custom thin scrollbar (WebKit) */
+.lang__menu-list::-webkit-scrollbar {
+  width: 10px;
+}
+.lang__menu-list::-webkit-scrollbar-track {
+  background: linear-gradient(180deg, rgba(2,6,23,0.4), rgba(2,6,23,0.2));
+  border-radius: 12px;
+}
+.lang__menu-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(99,102,241,0.55), rgba(139,92,246,0.55));
+  border-radius: 12px;
+  border: 2px solid rgba(2,6,23,0.6);
+}
+.lang__menu-list::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(99,102,241,0.7), rgba(139,92,246,0.7));
+}
+
+/* Firefox thin scrollbar */
+.lang__menu-list {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(99,102,241,0.7) rgba(2,6,23,0.4);
+}

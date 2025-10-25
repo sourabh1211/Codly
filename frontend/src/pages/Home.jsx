@@ -73,18 +73,7 @@ const Home = () => {
   const getRunTimes = async () => {
     const res = await fetch("https://emkc.org/api/v2/piston/runtimes");
     const data = await res.json();
-    const filtered = [
-    "matl","bash","befunge93","bqn","brachylog","brainfuck","cjam","clojure",
-    "cobol","coffeescript","cow","crystal","dart","dash","typescript","javascript",
-    "basic.net","fsharp.net","csharp.net","fsi","dragon","elixir","emacs","emojicode",
-    "erlang","file","forte","forth","freebasic","awk","c","c++","d","fortran","go",
-    "golfscript","groovy","haskell","husk","iverilog","japt","java","jelly","julia",
-    "kotlin","lisp","llvm_ir","lolcode","lua","csharp","basic","nasm","nasm64","nim",
-    "ocaml","octave","osabie","paradoc","pascal","perl","php","ponylang","prolog","pure",
-    "powershell","pyth","python2","python","racket","raku","retina","rockstar","rscript",
-    "ruby","rust","samarium","scala","smalltalk","sqlite3","swift","vlang","vyxal",
-    "yeethon","zig"
-  ];
+    const filtered = ["python", "javascript", "c", "c++", "java", "bash"];
     const options = data
       .filter(r => filtered.includes(r.language.toLowerCase()))
       .map(r => ({
